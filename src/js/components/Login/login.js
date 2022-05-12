@@ -15,7 +15,7 @@ function Login() {
             <div style={{marginTop: 90}}>
                <div style={{display: 'flex', flexDirection: 'row', background: '#f4f4f4', width: '80vw', justifyContent: 'space-around', padding: '10px 15px', textAlign: 'center', marginLeft: 'auto', marginRight: 'auto', borderRadius: '20px', color:'#000'}}>
                     <div style={{backgroundColor: '#036463', padding: '5px 10px', width: 40, borderRadius: '20px', color:'#fff'}}>
-                        Hindi
+                    हिन्दी
                     </div>
                     <div style={{padding: '5px 10px', width: 40, borderRadius: '20px'}}>
                         English
