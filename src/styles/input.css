@@ -1,0 +1,28 @@
+input[type=email] {
+    width: 80%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border-radius: 25px;
+    background-color: rgba(244, 244, 244, 1);
+    font-size: 15px;
+  }
+/* .icon {
+  float: right;
+        margin-right: 6px;
+        margin-top: -20px;
+        position: relative;
+        z-index: 2;
+        color: red;
+}
+
+    .input-wrapper {
+        display:inline-block;
+        position: relative
+    }
+    .input-wrapper:after {
+        font-family: 'FontAwesome';
+        content: '\f274';
+        position: absolute;
+        right: 6px;
+    } */
