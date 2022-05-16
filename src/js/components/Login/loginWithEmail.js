@@ -55,6 +55,8 @@ function LoginWithEmail() {
                     backgroundColor: 'rgba(244,244,244,1)',
                     padding: '15px 55px',
                     borderRadius: 25,
+
+                    
                     color: '#036463',
                     marginTop: 4,
                     border: '1px solid #036463'
