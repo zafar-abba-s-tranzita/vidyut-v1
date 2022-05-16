@@ -1,24 +1,25 @@
 import React from 'react'
-// import { makeStyles } from '@mui/material/styles'
+import { makeStyles } from '@mui/styles';
 import VtLogo from "../../../images/VTlogo4 3.png"
 import autoEv from "../../../images/apremium-electric-sports-sedan-car-isolated.png"
 import '../../../styles/input.css'
 import { ChevronRightOutlined, EmailOutlined } from '@mui/icons-material'
 import { TextField, IconButton, Button } from '@mui/material'
-
-// const useStyles = makeStyles({
-//     flexGrow: {
-//       flex: '1',
-//     },
-//     button: {
-//       '&:hover': {
-//         backgroundColor: 'red',
-//         color: '#3c52b2',
-//     },
-//   }})
+import { Link } from 'react-router-dom'
+import Login from './login';
+const useStyles = makeStyles({
+    button: {
+      '&:active': {
+        backgroundColor: '#036463',
+        color: '#fff',
+    }},
+    link: {
+        textDecoration: 'none'
+    }
+})
 
 function LoginWithEmail() {
-    // const classes = useStyles();
+    const classes = useStyles();
 
     const [value, setValue] = React.useState("");
 
@@ -30,12 +31,14 @@ function LoginWithEmail() {
     <div>
         <div>
         <div style={{display: 'flex', flexDirection: 'column'}}>
+            <Link to={'/'} className={classes.link}>
             <div style={{display: 'flex', justifyContent: 'center', marginTop: 40}}>
                 <img src={VtLogo} alt="VT Logo" />
-            </div>            
+            </div>    
+            </Link>           
             <div style={{display: 'flex', flexDirection: 'column', marginTop: 30,  alignItems: 'center', marginTop: 90}}>
                 <TextField
-                    variant="standard" // <== changed this
+                    variant="standard" 
                     margin="normal"
                     required
                     placeholder='Enter Email ID'
@@ -48,10 +51,11 @@ function LoginWithEmail() {
                             disableUnderline: true
                     }}
                     sx={{background: 'rgba(244, 244, 244, 1)', width: '80%', boxSizing: 'border-box', margin: '8px 0', borderRadius: 25, marginRight: 'auto', marginLeft: 'auto', padding: '12px 10px'}}
+                    onChange={handleChange}
                 />
                 <br />
 
-                <Button sx={{
+                {value && <Button sx={{
                     backgroundColor: 'rgba(244,244,244,1)',
                     padding: '15px 55px',
                     borderRadius: 25,
@@ -62,12 +66,12 @@ function LoginWithEmail() {
                     border: '1px solid #036463'
                 }}
                 endIcon={<ChevronRightOutlined />}
-                // className={classes.button}
+                className={classes.button}
                 >
                     Send OTP
-                </Button>
+                </Button>}
             </div>
-            <div style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-start', marginTop: 80}}>
+            <div style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-start', marginTop: 580, position: 'fixed'}}>
                 <img src={autoEv} alt={"Auto Ev"} />
             </div>
         </div>

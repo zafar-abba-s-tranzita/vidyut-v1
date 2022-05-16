@@ -5,12 +5,14 @@ import LoginWithEmail from "./js/components/Login/loginWithEmail";
 
 function App() {
   return (
+    <>
     <Router>
           <Switch>
-            <Route path='/' exact component={Login} />
+            <Route exact path='/' component={Login} />
             <Route path='/emailLogged' component={LoginWithEmail} />
           </Switch>
       </Router>
+    </>
   );
 }
 
