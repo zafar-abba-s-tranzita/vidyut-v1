@@ -1,24 +1,31 @@
 import React from 'react'
-import { makeStyles } from '@mui/material'
+// import { makeStyles } from '@mui/material/styles'
 import VtLogo from "../../../images/VTlogo4 3.png"
 import autoEv from "../../../images/apremium-electric-sports-sedan-car-isolated.png"
 import '../../../styles/input.css'
 import { ChevronRightOutlined, EmailOutlined } from '@mui/icons-material'
 import { TextField, IconButton, Button } from '@mui/material'
 
-const useStyles = makeStyles({
-    flexGrow: {
-      flex: '1',
-    },
-    button: {
-      '&:hover': {
-        backgroundColor: 'red',
-        color: '#3c52b2',
-    },
-  }})
+// const useStyles = makeStyles({
+//     flexGrow: {
+//       flex: '1',
+//     },
+//     button: {
+//       '&:hover': {
+//         backgroundColor: 'red',
+//         color: '#3c52b2',
+//     },
+//   }})
 
 function LoginWithEmail() {
-    const classes = useStyles();
+    // const classes = useStyles();
+
+    const [value, setValue] = React.useState("");
+
+    function handleChange(e) {
+        setValue(e.target.value);
+    }
+
   return (
     <div>
         <div>
@@ -53,7 +60,7 @@ function LoginWithEmail() {
                     border: '1px solid #036463'
                 }}
                 endIcon={<ChevronRightOutlined />}
-                className={classes.button}
+                // className={classes.button}
                 >
                     Send OTP
                 </Button>
