@@ -5,8 +5,9 @@ import autoEv from "../../../images/apremium-electric-sports-sedan-car-isolated.
 import '../../../styles/input.css'
 import { ChevronRightOutlined, EmailOutlined } from '@mui/icons-material'
 import { TextField, IconButton, Button } from '@mui/material'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import Login from './login';
+import LogginOTP from './logginOtp';
 const useStyles = makeStyles({
     button: {
       '&:active': {
@@ -19,12 +20,18 @@ const useStyles = makeStyles({
 })
 
 function LoginWithEmail() {
+    const history = useHistory();
     const classes = useStyles();
 
     const [value, setValue] = React.useState("");
 
     function handleChange(e) {
-        setValue(e.target.value);
+        if(e.target.value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)){
+            setValue(e.target.value)
+        }
+        else{
+            setValue(null)
+        }
     }
 
   return (
@@ -67,6 +74,7 @@ function LoginWithEmail() {
                 }}
                 endIcon={<ChevronRightOutlined />}
                 className={classes.button}
+                onClick={() => history.push('/otp')}
                 >
                     Send OTP
                 </Button>}
