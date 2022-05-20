@@ -3,7 +3,7 @@ import { makeStyles } from '@mui/styles';
 import VtLogo from "../../../images/VTlogo4 3.png"
 import autoEv from "../../../images/apremium-electric-sports-sedan-car-isolated.png"
 import '../../../styles/input.css'
-import { ChevronRightOutlined, EmailOutlined } from '@mui/icons-material'
+import { Call, ChevronRightOutlined, EmailOutlined } from '@mui/icons-material'
 import { TextField, IconButton, Button } from '@mui/material'
 import { Link, useHistory } from 'react-router-dom'
 import Login from './login';
@@ -20,7 +20,7 @@ const useStyles = makeStyles({
     }
 })
 
-function LoginWithEmail() {
+function LogginWithPhone() {
     const history = useHistory();
     const classes = useStyles();
 
@@ -28,7 +28,8 @@ function LoginWithEmail() {
     // const [email, setEmail] = React.useState(null);
 
     function handleChange(e) {
-        if(e.target.value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)){
+        let regx = /((\+*)((0[ -]*)*|((91 )*))((\d{12})+|(\d{10})+))|\d{5}([- ]*)\d{6}/
+        if(e.target.value.match(regx)){
             setValue(e.target.value)
         }
         else{
@@ -37,7 +38,7 @@ function LoginWithEmail() {
     }
 
     function sendOtp(e) {
-        console.log('send OTP to email->', value);
+        console.log('send OTP to Phone->', value);
 
         history.push('/otp');
     }
@@ -56,11 +57,12 @@ function LoginWithEmail() {
                     variant="standard" 
                     margin="normal"
                     required
-                    placeholder='Enter Email ID'
+                    placeholder='Enter Phone Number'
+                    type={'number'}
                     InputProps={{
                         startAdornment: (
                         <IconButton>
-                            <EmailOutlined style={{color: '#036463', fontSize: 25, fontWeight: 'lighter'}}/>
+                            <Call style={{color: '#036463', fontSize: 25, fontWeight: 'lighter'}}/>
                         </IconButton>
                             ),
                             disableUnderline: true
@@ -96,4 +98,4 @@ function LoginWithEmail() {
   )
 }
 
-export default LoginWithEmail
+export default LogginWithPhone

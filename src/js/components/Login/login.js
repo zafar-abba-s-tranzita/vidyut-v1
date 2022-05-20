@@ -45,9 +45,11 @@ function Login() {
                         
                         <Typography style={{font:'Montserrat', textAlign: 'center', color: '#036463', fontSize: 12, marginTop: '5px'}}> OR </Typography>
                    
+                    <Link to={'/phoneLogged'} style={{textDecoration: 'none'}}>
                     <div style={{width: '324px', height: '48px', borderRadius: '20px', backgroundColor:'#f4f4f4', color: '#036463',textAlign: 'center', marginLeft: 'auto', marginRight: 'auto', marginTop: 3, display: 'flex'}}> 
                     <img src={Phone} width={20} height={20} style={{marginTop: 17, marginRight: 20, marginLeft: 20}}/> <p>Login With Mobile Number</p>
                     </div>
+                    </Link>
                     
                     
                     <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginRight: 95}}>

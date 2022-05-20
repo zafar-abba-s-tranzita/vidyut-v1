@@ -7,7 +7,7 @@ import { Button, Modal, Typography } from '@mui/material';
 import { CheckCircleOutline, ChevronRightRounded, Edit } from '@mui/icons-material';
 import OtpInput from 'react-otp-input';
 import { Box, color } from '@mui/system';
-
+// import firebase from 'firebase';
 
 const useStyles = makeStyles({
     button: {
@@ -24,13 +24,26 @@ function LogginOTP() {
     const classes = useStyles();
     const [otp, setOtp] = React.useState([]);
     const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+    const handleOpen = () => {
+        setOpen(true);
+        setTimeout(() => {
+            setOpen(false);
+        }, 3000);
+        onboard()
+    }
+
+    const handleClose = () => {
+        setOpen(false);
+        onboard();
+    }
+    const onboard = () => {
+        setTimeout(() => {
+            history.push('/onboarding');
+        }, 1200);
+    }
 
     React.useEffect(() => {
-      setTimeout(() => {
-          setOpen(false)
-      }, 3000);
+      
     });
     
   
@@ -87,11 +100,11 @@ function LogginOTP() {
             }}
             isInputNum={true}
             inputStyle={{
-                width: "2rem",
-                height: "3rem",
+                width: "50px",
+                height: "3.2rem",
                 margin: "0 1rem",
                 fontSize: "2rem",
-                borderRadius: 20,
+                borderRadius: 12,
                 border: "1px solid rgba(0,0,0,0.8)",
                 backgroundColor: "rgba(244,244,244,1)", //03646377
                 marginTop: 10
