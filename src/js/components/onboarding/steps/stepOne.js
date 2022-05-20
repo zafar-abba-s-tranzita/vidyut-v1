@@ -138,7 +138,7 @@ function StepOne() {
                 <CircularProgress
                     variant="determinate"
                     sx={{
-                    color: '#ffffff35'
+                    color: '#ffffff35',
                     }}
                     size={40}
                     thickness={4}
