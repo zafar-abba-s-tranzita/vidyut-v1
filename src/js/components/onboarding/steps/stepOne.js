@@ -163,7 +163,7 @@ function StepOne() {
                 <Box
                     sx={{
                     top: 0,
-                    left: -4,
+                    left: 0,
                     bottom: 0,
                     right: 0,
                     position: 'absolute',
