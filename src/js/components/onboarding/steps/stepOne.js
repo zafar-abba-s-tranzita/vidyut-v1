@@ -45,14 +45,14 @@ function StepOne() {
     const increase = () => {
         setCounter(count => count + 1);
         if(counter == 4){
-            // history.push('/');
-            // setCounter(0)
+            history.push('/');
+            setCounter(0)
         }
         onboarding(counter);
       };
     
     const onboarding = (xyz) => {
-        setVal(json.find((e) => e.id === 3))
+        setVal(json.find((e) => e.id === xyz))
     }
     React.useEffect(() => {
       increase()
