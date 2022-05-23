@@ -45,14 +45,14 @@ function StepOne() {
     const increase = () => {
         setCounter(count => count + 1);
         if(counter == 4){
-            history.push('/');
-            setCounter(0)
+            // history.push('/');
+            // setCounter(0)
         }
         onboarding(counter);
       };
     
     const onboarding = (xyz) => {
-        setVal(json.find((e) => e.id === xyz))
+        setVal(json.find((e) => e.id === 3))
     }
     React.useEffect(() => {
       increase()
@@ -160,7 +160,7 @@ function StepOne() {
                     value={counter*25}
                     // {...props}
                 />
-                <Box
+                {/* <Box
                     sx={{
                     top: 0,
                     left: 0,
@@ -171,9 +171,20 @@ function StepOne() {
                     alignItems: 'center',
                     justifyContent: 'center',
                     }}
-                >
-                    <ChevronRight sx={{fontSize: 30, color: '#fff'}} />   
-                </Box>
+                > */}
+                    <ChevronRight sx={{
+                    fontSize: 30, 
+                    color: '#fff', 
+                    top: 0,
+                    left: 0,
+                    bottom: 0,
+                    right: 0,
+                    position: 'absolute',
+                    display: 'flex',
+                    alignItems: 'center',
+                    transform: 'translate(15%, 15%)'
+                    }} />   
+                {/* </Box> */}
             </Box>
         </div>
         <div>

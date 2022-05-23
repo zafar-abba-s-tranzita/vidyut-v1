@@ -89,7 +89,7 @@ function LogginWithPhone() {
                     Send OTP
                 </Button>}
             </div>
-            <div style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-start', marginTop: 580, position: 'fixed'}}>
+            <div style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-start', bottom: 0, position: 'absolute'}}>
                 <img src={autoEv} alt={"Auto Ev"} />
             </div>
         </div>
