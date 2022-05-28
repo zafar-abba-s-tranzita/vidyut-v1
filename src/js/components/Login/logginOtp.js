@@ -101,8 +101,8 @@ function LogginOTP() {
             isInputNum={true}
             inputStyle={{
                 width: "50px",
-                height: "3.2rem",
-                margin: "0 1rem",
+                height: "50px",
+                margin: "0 5px",
                 fontSize: "2rem",
                 borderRadius: 12,
                 border: "1px solid rgba(0,0,0,0.8)",
