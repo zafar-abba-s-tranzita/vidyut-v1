@@ -9,6 +9,7 @@ import UserBox from './components/UserBox';
 import PathVector from "../../../../images/path-vector.svg";
 import KMLeft from "../../../../images/KMLeft2.svg";
 import { COLOR } from "../../../../styles/Color";
+import VTLogo from '../../../../images/VTlogo4 3.png'
 
 import PropTypes from "prop-types";
 import { Global } from "@emotion/react";
@@ -20,58 +21,9 @@ import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import { ModalUnstyled } from '@mui/base';
 import clsx from 'clsx'
 import { Fade } from '@mui/material';
-
-const BackdropUnstyled = React.forwardRef((props, ref) => {
-  const { open, className, ...other } = props;
-  return (
-    <div
-      className={clsx({ 'MuiBackdrop-open': open }, className)}
-      ref={ref}
-      {...other}
-    />
-  );
-});
-
-BackdropUnstyled.propTypes = {
-  className: PropTypes.string.isRequired,
-  open: PropTypes.bool,
-};
-
-const Modal = styled(ModalUnstyled)`
-  position: fixed;
-  z-index: 1300;
-  right: 0;
-  bottom: 0;
-  top: 0;
-  left: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-const Backdrop = styled(BackdropUnstyled)`
-  z-index: -1;
-  position: fixed;
-  right: 0;
-  bottom: 0;
-  top: 0;
-  left: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  -webkit-tap-highlight-color: transparent;
-`;
-
-const style = (theme) => ({
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  backgroundColor: theme.palette.mode === 'dark' ? '#0A1929' : 'white',
-  border: '2px solid currentColor',
-  boxShadow: 24,
-  padding: '16px 32px 24px 32px',
-});
-
+import AlertDialogSlide from './components/SwipeDialog';
+import useRazorpay from 'react-razorpay';
+import SwipePrev from './components/Payment';
 
 const drawerBleeding = 56;
 
@@ -98,13 +50,35 @@ const Puller = styled(Box)(({ theme }) => ({
 }));
 
 function Dashboard() {
+    const Razorpay = useRazorpay();
     const location = useLocation();
     const [open, setOpen] = React.useState(false);
     const [value, setValue] = React.useState(1);
     const [activeId, setActiveId] = React.useState();
-    const [open1, setOpen1] = React.useState(false)
+    const [open1, setOpen1] = React.useState(false);
     const handleOpen = () => setOpen1(true);
     const handleClose = () => setOpen1(false);
+
+    const [openPrevious, setOpenPrevious] = React.useState(false);
+
+    const togglePrevDrawer = (prev) => () => {
+      setOpenPrevious(prev);
+      // console.log(prev)
+    };
+
+    const closePrevDrawer = () => {
+      setOpenPrevious(false);
+    }
+
+    const [openDialog, setOpenDialog] = React.useState(false);
+
+    const handleDialogOpen = () => {
+      setOpenDialog(true);
+    };
+  
+    const handleDialogClose = () => {
+      setOpenDialog(false);
+    };
 
     const rates = [
       { id: 1, km: 110, rate: 500 },
@@ -116,13 +90,41 @@ function Dashboard() {
     const toggleDrawer = (newOpen) => () => {
       setOpen(newOpen);
     };
-    
-    console.log(activeId)
+
     const toggleValue = async (val) => {
       setValue(val => val+1);
-      console.log(value)
+    };
+
+    const handlePayment = async () => {
+      if(activeId === 4) {
+        handleDialogOpen()
+      }
+      else{
+        const opt = {
+          id: "order_HlYVQUC4lTYot9",
+          amount: 500*100,
+          currency: "INR",
+          receipt: "#91",
+          name: "VidyutTech",
+          key: "rzp_test_uBwzaVYIfyWlm7",
+          image: VTLogo,
+          theme: {
+            color: "#036463",
+          },
+        };
+    
+        const razorpay = new Razorpay(opt);
+    
+        razorpay.on("payment.failed", (res) => {
+          // handle fail Payment
+          console.log("Payment Failed: ", res);
+        });
+    
+        razorpay.open();
+      }
+      //handle's razorpay here..
     }
-    // console.log(COLOR);
+    
   return (
     <div style={{background: COLOR.BASE_COLOR1 , height: '100vh' }}>
     <Grid container style={{height: '45vh'}}>
@@ -134,20 +136,21 @@ function Dashboard() {
     
     {!open && <Container sx={{background: COLOR.BASE_COLOR3 , height: '55vh', borderTopLeftRadius: 25, borderTopRightRadius: 25}}>
 
-<Grid container item justifyContent="flex-end" sx={{background: 'unset'}}>
-  <Grid item 
-  sx={{
-    display: 'flex',
-    flexDirection: 'row',
-    padding: '20px 15px'
-  }}
-  >
-    <Typography>
-      View recharge history
-    </Typography>
-    <ArrowRightAltRounded  sx={{color: COLOR.PRIMARY_COLOR1 }} />
-  </Grid>
-</Grid>
+      <Grid container item justifyContent="flex-end" sx={{background: 'unset'}}>
+        <Grid item 
+        sx={{
+          display: 'flex',
+          flexDirection: 'row',
+          padding: '20px 15px',
+        }}
+        onClick={togglePrevDrawer(true)}
+        >
+          <Typography>
+            View recharge history
+          </Typography>
+          <ArrowRightAltRounded  sx={{color: COLOR.PRIMARY_COLOR1 }} />
+        </Grid>
+      </Grid>
 
 <Grid container sx={{justifyContent: 'space-around', alignItems: 'stretch'}} alignItems="stretch">
    
@@ -270,9 +273,7 @@ function Dashboard() {
 
               </Container>}
 
-    {open && 
-    
-    <Root>
+    {open && <Root>
     <CssBaseline />
     <Global
       styles={{
@@ -306,7 +307,7 @@ function Dashboard() {
           }}
         >
           {/* <Puller /> */}
-          <div style={{display:'flex', alignItems: 'center', marginLeft: 15}}>
+          <div style={{display:'flex', alignItems: 'center', marginLeft: 15}} onClick={toggleDrawer(false)}>
           <ArrowBackRounded sx={{color: COLOR.PRIMARY_COLOR1}} />
           <Typography sx={{ p: 2, color: "text.primary", fontWeight: 600 }}>
              Go back 
@@ -411,38 +412,18 @@ function Dashboard() {
             sx={{minWidth: '100%', alignItems:"center", mt: 2, height: 45, background: COLOR.BRAND_COLOR, color: COLOR.BASE_COLOR4, borderRadius: 2 }}
             disableElevation
             disabled={activeId ? false : true}
-            // onClick={handleOpen}
+            onClick={handlePayment}
           >
          Recharge now
          </Button>
         </StyledBox>
-
       </SwipeableDrawer>
-
-      
-   </Root>
-
-    }
-
-
-      <Modal
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
-        open={open1}
-        onClose={handleClose}
-        closeAfterTransition
-        BackdropComponent={Backdrop}
-      >
-        <Fade in={open1} timeout={300}>
-          <Box sx={style}>
-            <h2 id="transition-modal-title">Text in a modal</h2>
-            <span id="transition-modal-description" style={{ marginTop: '16px' }}>
-              Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-            </span>
-          </Box>
-        </Fade>
-      </Modal>
+            </Root>}
     
+    {openDialog && <AlertDialogSlide  open={openDialog} handleClose1={handleDialogClose}/>}
+
+    {openPrevious && <SwipePrev open={openPrevious} handlePrevClose={closePrevDrawer} />}
+      
     </div>
   )
 }   
