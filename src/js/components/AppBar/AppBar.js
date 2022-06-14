@@ -13,10 +13,13 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import { Close, Home, HomeMaxRounded, HomeOutlined, LogoutRounded } from '@mui/icons-material';
+import { Close, Home, HomeMaxRounded, HomeOutlined, KeyboardArrowDownRounded, LanguageOutlined, LogoutRounded } from '@mui/icons-material';
+// import PopoverPopupState from './components/LangDropdown';
+
 
 
 const AppBody = () => {
+
   const [state, setState] = React.useState({
     right: false,
   });
@@ -36,7 +39,7 @@ const AppBody = () => {
     <Box
       sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
       role="presentation"
-      onClick={toggleDrawer(anchor, false)}
+      // onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <Box sx={{float: 'right', mt: 2, mr: 2}}>
@@ -47,16 +50,27 @@ const AppBody = () => {
       </IconButton>
       </Box>
       <List sx={{mt: 10}}>
-        {['Home', 'Logout'].map((text, index) => (
+        {['Logout'].map((text, index) => (
           <ListItem key={text} disablePadding sx={{mt: 1}}> 
             <ListItemButton>
               <ListItemIcon>
-                {index % 2 === 0 ? <HomeOutlined sx={{color: '#036463', fontSize: 16*2.1}} /> : <LogoutRounded sx={{fontSize: 16*2.1, color: '#036463'}} />}
+                <LogoutRounded sx={{fontSize: 16*2.1, color: '#036463'}} />
               </ListItemIcon>
               <ListItemText primaryTypographyProps={{fontSize: 16, fontWeight: 600, color: '#626262'}} primary={text} />
             </ListItemButton>
           </ListItem>
         ))}
+          <ListItem disablePadding sx={{mt: 1}} onClick={() => console.log('HIIII')}> 
+            <ListItemButton>
+              <ListItemIcon>
+                <LanguageOutlined sx={{fontSize: 16*2.1, color: '#036463'}} />
+              </ListItemIcon>
+              <ListItemText primaryTypographyProps={{fontSize: 16, fontWeight: 600, color: '#626262'}} primary={'English'}  />
+              <ListItemIcon>
+                <KeyboardArrowDownRounded sx={{fontSize: 16*2.1, color: '#036463', mr: 8}} />
+              </ListItemIcon>
+            </ListItemButton>
+          </ListItem>
       </List>
     </Box>
   );

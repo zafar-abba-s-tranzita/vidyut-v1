@@ -21,7 +21,6 @@ export default function AlertDialogSlide(props) {
   
   const handlePayment = () => {
     const opt = {
-      id: "order_HlYVQUC4lTYot9",
       amount: value*100,
       currency: "INR",
       receipt: "#91",
@@ -30,6 +29,7 @@ export default function AlertDialogSlide(props) {
       image: VTLogo,
       theme: {
         color: "#036463",
+        hide_topbar: false
       },
     };
 
