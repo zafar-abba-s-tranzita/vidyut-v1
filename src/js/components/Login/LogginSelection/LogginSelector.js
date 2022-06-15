@@ -87,6 +87,7 @@ function LogginSelector() {
     }
 
     const changeLoggin = () => {
+        setValue(null);
         setChange(change ? false : true);
     }
 

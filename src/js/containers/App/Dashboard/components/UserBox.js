@@ -11,7 +11,7 @@ function UserBox() {
         display: 'flex', justifyContent: 'space-evenly', alignItems: 'center'
         }}>
         
-    <img src={SmallAuto} alt="VT Auto" style={{width: '32vw', mixBlendMode: 'multiply'}}/>    
+    <img src={SmallAuto} alt="VT Auto" style={{width: '32vw'}}/>    
     <Box color={'#fff'}>
         <Grid item>
           <Typography fontSize={14} fontWeight={500}>

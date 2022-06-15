@@ -58,7 +58,7 @@ function SwipePrev(props) {
       <Global
         styles={{
           '.MuiDrawer-root > .MuiPaper-root': {
-            height: `calc(055% - ${drawerBleeding}px)`,
+            height: `calc(90% - ${drawerBleeding}px)`,
             overflow: 'visible',
           },
         }}

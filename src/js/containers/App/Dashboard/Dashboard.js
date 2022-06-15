@@ -126,7 +126,7 @@ function Dashboard() {
     }
     
   return (
-    <div style={{background: COLOR.BASE_COLOR1 , height: '100vh' }}>
+    <div style={{background: COLOR.BASE_COLOR4 , height: '100vh' }}>
     <Grid container style={{height: '45vh'}}>
     <AppBar />
             <Grid container item xs={12} alignItems="center" justifyContent="center">
@@ -134,7 +134,7 @@ function Dashboard() {
             </Grid>
     </Grid>
     
-    {!open && <Container sx={{background: COLOR.BASE_COLOR3 , height: '55vh', borderTopLeftRadius: 25, borderTopRightRadius: 25}}>
+    {!open && <Container sx={{background: COLOR.BASE_COLOR2 , height: '55vh', borderTopLeftRadius: 25, borderTopRightRadius: 25}}>
 
       <Grid container item justifyContent="flex-end" sx={{background: 'unset'}}>
         <Grid item 
@@ -152,126 +152,126 @@ function Dashboard() {
         </Grid>
       </Grid>
 
-<Grid container sx={{justifyContent: 'space-around', alignItems: 'stretch'}} alignItems="stretch">
-   
-<Grid item xs={4}>
-    <Card sx={{borderRadius: 5, textAlign: 'center', boxShadow: '0px 4px 34px 3px rgba(0, 0, 0, 0.04)', border: '1px solid #EDEDED'}}>
-    <CardContent >
-    <Grid
-      container
-      style={{ justifyContent: 'center'}}
-    >
-    <Grid item>
-      <Typography
-        color="textSecondary"
-        gutterBottom
-        fontSize={12}
-        fontWeight={700}
-        sx={{wordWrap: 'break-word', letterSpacing: 1.22}}
-      >
-        Monthly utilisation
-      </Typography>
-     
-    </Grid>
-    <Grid item>
-    <Typography color={"#141414"} fontSize={24} fontWeight={700} >900</Typography>
-    <Typography color={"#141414"} fontSize={10} fontWeight={600}>Kms</Typography>
-    </Grid>
-  </Grid>
-    </CardContent>
-    </Card>
-</Grid>
+          <Grid container sx={{justifyContent: 'space-around', alignItems: 'stretch'}} alignItems="stretch">
+            
+          <Grid item xs={4}>
+              <Card sx={{borderRadius: 5, textAlign: 'center', boxShadow: '0px 4px 34px 3px rgba(0, 0, 0, 0.04)', border: '1px solid #EDEDED'}}>
+              <CardContent >
+              <Grid
+                container
+                style={{ justifyContent: 'center'}}
+              >
+              <Grid item>
+                <Typography
+                  color="textSecondary"
+                  gutterBottom
+                  fontSize={12}
+                  fontWeight={700}
+                  sx={{wordWrap: 'break-word', letterSpacing: 1.22}}
+                >
+                  Monthly utilisation
+                </Typography>
+              
+              </Grid>
+              <Grid item>
+              <Typography color={"#141414"} fontSize={24} fontWeight={700} >900</Typography>
+              <Typography color={"#141414"} fontSize={10} fontWeight={600}>Kms</Typography>
+              </Grid>
+            </Grid>
+              </CardContent>
+              </Card>
+          </Grid>
 
-<Grid item xs={7} style={{display: 'flex'}}>
-<Card sx={{borderRadius: 5, textAlign: 'center', boxShadow: '0px 4px 34px 3px rgba(0, 0, 0, 0.04)', border: '1px solid #EDEDED', display: 'flex', justifyContent: 'space-between', flexDirection: 'column'}}>
-<CardContent >
-<Grid
-  container
-  style={{ justifyContent: 'center'}}
->
-<Grid item>
-  <Typography
-    color="textSecondary"
-    gutterBottom
-    fontSize={12}
-    fontWeight={700}
-    sx={{wordWrap: 'break-word', letterSpacing: 1.22, textAlign: 'left'}}
-  >
-    Utilisation till date
-  </Typography>
-  
-</Grid>
+          <Grid item xs={7} style={{display: 'flex'}}>
+          <Card sx={{borderRadius: 5, textAlign: 'center', boxShadow: '0px 4px 34px 3px rgba(0, 0, 0, 0.04)', border: '1px solid #EDEDED', display: 'flex', justifyContent: 'space-between', flexDirection: 'column'}}>
+          <CardContent >
+          <Grid
+            container
+            style={{ justifyContent: 'center'}}
+          >
+          <Grid item>
+            <Typography
+              color="textSecondary"
+              gutterBottom
+              fontSize={12}
+              fontWeight={700}
+              sx={{wordWrap: 'break-word', letterSpacing: 1.22, textAlign: 'left'}}
+            >
+              Utilisation till date
+            </Typography>
+            
+          </Grid>
 
-<Grid container sx={{flexDirection: 'row', justifyContent: 'space-around', alignItems: 'flex-end'}}>
-<Grid item marginTop={2}>
-<Typography color={"#141414"} fontSize={20} fontWeight={600} >10,000</Typography>
-<Typography color={"#141414"} fontSize={10} fontWeight={600}>Kms</Typography>
-</Grid>
+          <Grid container sx={{flexDirection: 'row', justifyContent: 'space-around', alignItems: 'flex-end'}}>
+          <Grid item marginTop={2}>
+          <Typography color={"#141414"} fontSize={20} fontWeight={600} >10,000</Typography>
+          <Typography color={"#141414"} fontSize={10} fontWeight={600}>Kms</Typography>
+          </Grid>
 
-<Grid item>
-  <img src={PathVector} />
-</Grid>
-</Grid>
-</Grid>
-</CardContent>
-</Card>
-</Grid>
+          <Grid item>
+            <img src={PathVector} />
+          </Grid>
+          </Grid>
+          </Grid>
+          </CardContent>
+          </Card>
+          </Grid>
 
-</Grid>
+          </Grid>
 
-<Grid container sx={{justifyContent: 'space-around', alignItems: 'stretch', mt: 2}} alignItems="stretch">
-   
-<Grid item xs={12}>
-<Card sx={{borderRadius: 5, textAlign: 'center', boxShadow: '0px 4px 34px 3px rgba(0, 0, 0, 0.04)', border: '1px solid #EDEDED'}}>
-<CardContent >
-  <Grid container flexWrap={'nowrap'}>
-  <Grid
-  container
-  style={{ justifyContent: 'center', flexDirection: 'column', alignItems: 'flex-start'}}
->
-<Grid item>
-<Typography
-    color="textSecondary"
-    gutterBottom
-    fontSize={12}
-    fontWeight={700}
-    sx={{wordWrap: 'break-word', letterSpacing: 1.22, textAlign: 'left'}}
-  >
-    Remaining Kms
-  </Typography>
-  
-</Grid>
+          <Grid container sx={{justifyContent: 'space-around', alignItems: 'stretch', mt: 2}} alignItems="stretch">
+            
+          <Grid item xs={12}>
+          <Card sx={{borderRadius: 5, textAlign: 'center', boxShadow: '0px 4px 34px 3px rgba(0, 0, 0, 0.04)', border: '1px solid #EDEDED'}}>
+          <CardContent >
+            <Grid container flexWrap={'nowrap'}>
+            <Grid
+            container
+            style={{ justifyContent: 'center', flexDirection: 'column', alignItems: 'flex-start'}}
+          >
+          <Grid item>
+          <Typography
+              color="textSecondary"
+              gutterBottom
+              fontSize={12}
+              fontWeight={700}
+              sx={{wordWrap: 'break-word', letterSpacing: 1.22, textAlign: 'left'}}
+            >
+              Remaining Kms
+            </Typography>
+            
+          </Grid>
 
-<Grid item>
+          <Grid item>
 
-<Typography color={"#141414"} fontSize={43} fontWeight={600} >1,000</Typography>
-<Typography color={"#141414"} fontSize={14} fontWeight={600}>Kms</Typography>
-  
-</Grid>
-</Grid>
+          <Typography color={"#141414"} fontSize={43} fontWeight={600} >1,000</Typography>
+          <Typography color={"#141414"} fontSize={14} fontWeight={600}>Kms</Typography>
+            
+          </Grid>
+          </Grid>
 
-<Grid item>
-  <img src={KMLeft} />
-</Grid>
-  </Grid>
-</CardContent>
-</Card>
-</Grid>
+          <Grid item>
+            <img src={KMLeft} />
+          </Grid>
+            </Grid>
+          </CardContent>
+          </Card>
+          </Grid>
 
-</Grid>
+          </Grid>
 
-<Grid container sx={{mt: 2}}>
-  <Grid item xs={12}>
-    <Button variant="contained" sx={{minWidth: '92vw', minHeight: '48px', color: '#fff', background:'#036463' , borderRadius: 2}}  
-        onClick={toggleDrawer(true)}
-    >
-    Recharge now
-    </Button>
+          <Grid container sx={{mt: 2}}>
+            <Grid item xs={12}>
+              <Button variant="contained" sx={{minWidth: '92vw', minHeight: '48px', color: '#fff', background:'#036463' , borderRadius: 2}}  
+                  onClick={toggleDrawer(true)}
+              >
+              Recharge now
+              </Button>
 
-  </Grid>
-</Grid>
+            </Grid>
+          </Grid>
 
-              </Container>}
+    </Container>}
 
     {open && <Root>
     <CssBaseline />

@@ -14,7 +14,9 @@ import { COLOR } from '../../../../styles/Color';
 import { Alert, Grid, Stack } from '@mui/material';
 import OtpInput from 'react-otp-input';
 import ErrorAlert from '../../Alert/Error';
-
+import SuccessGIF from '../../../../images/success-otp.gif'
+import Dashboard from '../../../containers/App/Dashboard/Dashboard';
+import { Link } from 'react-router-dom';
 
 const drawerBleeding = 56;
 
@@ -40,16 +42,25 @@ const Puller = styled(Box)(({ theme }) => ({
 
 function SwipeOTPBox(props) {
     const [otp, setOtp] = React.useState([]);
-    const [error, setError] = React.useState(false)
+    const [error, setError] = React.useState(false);
+    const [success, setSuccess] = React.useState(false);
+
     const handleOTP = ()  => { 
         if(otp.length === 4) {
           let val = '0000'
           if (otp === val) {
-            setError(true)
+            setError(true);
           } else {
-            setError(false)
+            setError(false);
+            setSuccess(true);
           }
         } else { setError(false) }
+    }
+
+    const reset = () => {
+      setError(false);
+      setSuccess(false);
+      setOtp([]);
     }
 
   return (
@@ -66,12 +77,12 @@ function SwipeOTPBox(props) {
       <SwipeableDrawer
         anchor="bottom"
         open={props.open}
-        onClose={props.close}
+        onClose={props.close && reset}
         onOpen={props.open}
         swipeAreaWidth={drawerBleeding}
         disableSwipeToOpen={false}
         ModalProps={{
-          keepMounted: true,
+          keepMounted: false,
         }}
       >
         <StyledBox
@@ -93,7 +104,7 @@ function SwipeOTPBox(props) {
           </div>
 
         </StyledBox>
-        <StyledBox
+        {!success &&   <StyledBox
           sx={{
             px: 2,
             pb: 2,
@@ -147,7 +158,7 @@ function SwipeOTPBox(props) {
             {error &&  <ErrorAlert 
                             errorInfo={'Please enter correct otp'}
                             marginTop={2}
-                        />
+                          />
             }
 
             </Grid>
@@ -159,11 +170,47 @@ function SwipeOTPBox(props) {
                 disabled={otp.length === 4 ? false : true}
                 onClick={() => handleOTP()}
             >
-                Verify number
+                {!error ? 'Verify number' : 'Retry' }
             </Button>
             </Grid>
           </Grid>
-        </StyledBox>
+        </StyledBox> }
+
+        {success &&   <StyledBox
+          sx={{
+            px: 2,
+            pb: 2,
+            height: '100%',
+            overflow: 'auto',
+            background: COLOR.BASE_COLOR4,
+          }}
+        >
+          <Grid container sx={{pt: 2}} justifyContent="center" gap={2}>
+            <Grid item alignItems={'center'} textAlign={'center'}>
+                <Typography fontSize={28} fontWeight={600} letterSpacing={'1.5%'}>
+                    Success!
+                </Typography>
+
+            </Grid>
+            <Grid item alignItems={'center'} display={"flex"} justifyContent={"center"} >
+                <img src={SuccessGIF} alt="" width="52%" />
+            </Grid>
+            <Grid item alignItems={'center'} sx={{position: 'absolute', bottom: 1}}>
+            <Button
+                variant='contained' 
+                sx={{minWidth: '90vw', alignItems:"center", my: 5, minHeight: "6vh", background: COLOR.PRIMARY_COLOR1, color: COLOR.BASE_COLOR4 , borderRadius: 2,border: `1px solid ${COLOR.BASE_COLOR1}`,  boxShadow: ` 0px 4px 12px rgba(98, 98, 98, 0.06)` }}
+                disableElevation
+                // disabled={otp.length === 4 ? false : true}
+                // onClick={() => handleOTP()}
+                LinkComponent={Link}
+                to="/dashboard"
+                
+            >
+                { 'Enter dashboard' }
+            </Button>
+            </Grid>
+          </Grid>
+        </StyledBox> }
       </SwipeableDrawer>
     </Root>
   );

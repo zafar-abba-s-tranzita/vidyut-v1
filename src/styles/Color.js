@@ -10,6 +10,7 @@ export const COLOR = {
     BASE_COLOR2 : "#F6FAFB",
     BASE_COLOR3 : "#FAFAFA",
     BASE_COLOR4 : "#FFFFFF",
+    BASE_COLOR5 : "#EDEDED",
     TYPO_BASE1 : "#141414",
     TYPO_BASE2 : "#3A3948",
     TYPO_BASE3 : "#414646",
