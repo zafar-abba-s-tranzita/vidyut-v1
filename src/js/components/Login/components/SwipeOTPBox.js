@@ -11,8 +11,9 @@ import Typography from '@mui/material/Typography';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import { ArrowBackRounded, CloseOutlined, CreditCardRounded, EditOutlined } from '@mui/icons-material';
 import { COLOR } from '../../../../styles/Color';
-import { Grid, Stack } from '@mui/material';
+import { Alert, Grid, Stack } from '@mui/material';
 import OtpInput from 'react-otp-input';
+import ErrorAlert from '../../Alert/Error';
 
 
 const drawerBleeding = 56;
@@ -39,20 +40,17 @@ const Puller = styled(Box)(({ theme }) => ({
 
 function SwipeOTPBox(props) {
     const [otp, setOtp] = React.useState([]);
-    const rates = [
-        { id: 1, text: 'Usage till date', rate: 10000 },
-        { id: 2, text: 'Monthly usage', rate: 1500 }
-      ];
-
-    const histroy = [
-        {id: 1},
-        {id: 2},
-        {id: 3},
-        {id: 4},
-        {id: 5},
-        {id: 6},
-        {id: 7},
-    ];
+    const [error, setError] = React.useState(false)
+    const handleOTP = ()  => { 
+        if(otp.length === 4) {
+          let val = '0000'
+          if (otp === val) {
+            setError(true)
+          } else {
+            setError(false)
+          }
+        } else { setError(false) }
+    }
 
   return (
     <Root>
@@ -111,7 +109,7 @@ function SwipeOTPBox(props) {
                 </Typography>
                 <Stack direction="row" spacing={1} alignItems="center" marginTop={1}>
                     <Typography fontSize={12} fontWeight={400}>
-                        Otp has been sent to <b> { `+91-8899889988` } </b> 
+                        Otp has been sent to <b> { props.input } </b> 
                     </Typography>
                     <EditOutlined sx={{color : COLOR.PRIMARY_COLOR1, fontSize: 15}} />
                 </Stack>
@@ -125,6 +123,7 @@ function SwipeOTPBox(props) {
             focusStyle={{
                 //border: 'none'
             }}
+            hasErrored={error ? true : false}
             errorStyle={{
                 border: '2px solid #f23'
             }}
@@ -144,6 +143,13 @@ function SwipeOTPBox(props) {
             <Typography fontSize={12} fontWeight={400} letterSpacing={'1.5%'} sx={{mt: 2, ml: 1, color: COLOR.TYPO_BASE3}} onClick={() => window.confirm("RESEND OTP!!!")}>
                 Resend otp
             </Typography>
+            
+            {error &&  <ErrorAlert 
+                            errorInfo={'Please enter correct otp'}
+                            marginTop={2}
+                        />
+            }
+
             </Grid>
             <Grid item alignItems={'center'} sx={{position: 'absolute', bottom: 1}}>
             <Button
@@ -151,7 +157,7 @@ function SwipeOTPBox(props) {
                 sx={{minWidth: '90vw', alignItems:"center", my: 5, minHeight: "6vh", background: COLOR.PRIMARY_COLOR1, color: COLOR.BASE_COLOR4 , borderRadius: 2,border: `1px solid ${COLOR.BASE_COLOR1}`,  boxShadow: ` 0px 4px 12px rgba(98, 98, 98, 0.06)` }}
                 disableElevation
                 disabled={otp.length === 4 ? false : true}
-                // onClick={() => changeLoggin()}
+                onClick={() => handleOTP()}
             >
                 Verify number
             </Button>

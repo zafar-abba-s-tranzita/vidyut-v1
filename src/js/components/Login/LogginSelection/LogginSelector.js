@@ -49,10 +49,30 @@ const AntSwitch = styled(Switch)(({ theme }) => ({
 
 function LogginSelector() {
 
-    const [activeBtn, setActiveBtn] = React.useState(false);
+    const [activeBtn, setActiveBtn] = React.useState(true);
     const [change, setChange] = React.useState(true); //true for mobile 
-    
     const [open, setOpen] = React.useState(false);
+    const [value, setValue] = React.useState(null)
+
+    function handleMobileNumChange(e) {
+      let regx = /((\+*)((0[ -]*)*|((91 )*))((\d{12})+|(\d{10})+))|\d{5}([- ]*)\d{6}/
+      if(e.target.value.match(regx)){
+          setValue(e.target.value)
+      }
+      else{
+          setValue(null)
+      }
+    }
+
+    function handleEmailChange(e) {
+      if(e.target.value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)){
+          setValue(e.target.value)
+      }
+      else{
+          setValue(null)
+      }
+    }
+
 
     const openDrawer = (open) => {
         setOpen(open);
@@ -72,58 +92,58 @@ function LogginSelector() {
 
   return (  
     <>
-    <Grid item>
-                        
-                        <Typography fontSize={12} fontWeight={600} color={'#626262'} sx={{ml: 1}}>  {/* OPEN SANS */}
-                            {change === true ? 'Mobile number' : 'Email'}
-                        </Typography>
-                        <OutlinedInput 
-                            sx={{border: '2px solid #F6FAFB', borderRadius: 2, minWidth: '90vw', minHeight: "1vh"}}
-                            // onChange={(e) => handleChange(e)}
-                            placeholder={change === true ? "Enter your mobile number" : "Enter your email"}
-                            inputProps={{
-                                style: {fontSize: 14, fontWeight: 600, letterSpacing: '0.5%' }
-                            }}
-                            color={'primary'}
-                            startAdornment={
-                                <InputAdornment position='start'>
-                                    {change === true ? <CallOutlined sx={{color: COLOR.PRIMARY_COLOR1}} /> : <EmailOutlined sx={{color: COLOR.PRIMARY_COLOR1}} />}
-                                 </InputAdornment>
-                            }
-                            type={change === true ? 'number' : 'text'}
-                            // value={value}
-                        />
-                    
-                        <Button
-                            variant='contained' 
-                            sx={{minWidth: '90vw', alignItems:"center", my: 2, minHeight: "6vh", background: '#036463', color: '#ffffff' , borderRadius: 2 }}
-                            disableElevation
-                            disabled={activeBtn ? false : true}
-                            onClick={() => openDrawer(true)}
-                        >
-                            Login
-                        </Button>
-                        <Stack direction="row" spacing={1} alignItems="center">
-                            <AntSwitch checked={activeBtn} inputProps={{ 'aria-label': 'ant design'}}  onClick={handleChange} />
-                    
-                            <Typography fontSize={10} fontWeight={600} color={'#626262'} sx={{ml: 1}}>  {/* OPEN SANS */}
-                                I agree to <span style={{color: COLOR.PRIMARY_COLOR2}}> Terms & Conditions </span> and <span style={{color: COLOR.PRIMARY_COLOR2}}>Privacy Policy.</span>
-                            </Typography>
-                        </Stack>
-                    
-                            <Divider color={COLOR.PRIMARY_COLOR1} sx={{mt: 5}} >  <Typography  fontSize={12} fontWeight={600} color={COLOR.PRIMARY_COLOR1} sx={{mx: 3}}> Or login with </Typography> </Divider>
-                            
-                            <Button
-                                variant='contained' 
-                                sx={{minWidth: '90vw', alignItems:"center", my: 2, minHeight: "6vh", background: COLOR.BASE_COLOR4, color: COLOR.PRIMARY_COLOR1 , borderRadius: 2,border: `1px solid ${COLOR.BASE_COLOR1}`,  boxShadow: ` 0px 4px 12px rgba(98, 98, 98, 0.06)` }}
-                                disableElevation
-                                onClick={() => changeLoggin()}
-                            >
-                                {change === true ? <Mail sx={{mr: 1}} /> : <Call sx={{mr: 1}} /> } {change === true ? 'Mail' : 'Mobile number' }
-                            </Button>
-                        </Grid>
+    <Grid item>            
+      <Typography fontSize={12} fontWeight={600} color={'#626262'} sx={{ml: 1}}>  {/* OPEN SANS */}
+          {change === true ? 'Mobile number' : 'Email'}
+      </Typography>
+      <OutlinedInput 
+          sx={{border: '2px solid #F6FAFB', borderRadius: 2, minWidth: '90vw', minHeight: "1vh"}}
+          // onChange={(e) => handleChange(e)}
+          placeholder={change === true ? "Enter your mobile number" : "Enter your email"}
+          inputProps={{
+              style: {fontSize: 14, fontWeight: 600, letterSpacing: '0.5%' }
+          }}
+          color={'primary'}
+          startAdornment={
+              <InputAdornment position='start'>
+                  {change === true ? <CallOutlined sx={{color: COLOR.PRIMARY_COLOR1}} /> : <EmailOutlined sx={{color: COLOR.PRIMARY_COLOR1}} />}
+                </InputAdornment>
+          }
+          type={change === true ? 'number' : 'text'}
+          // value={value}
+          onChange={change === true ? handleMobileNumChange : handleEmailChange}
+      />
+  
+      <Button
+          variant='contained' 
+          sx={{minWidth: '90vw', alignItems:"center", my: 2, minHeight: "6vh", background: '#036463', color: '#ffffff' , borderRadius: 2 }}
+          disableElevation
+          disabled={value ? false : true}
+          onClick={() => openDrawer(true)}
+      >
+          Login
+      </Button>
+      <Stack direction="row" spacing={1} alignItems="center">
+          <AntSwitch checked={activeBtn} inputProps={{ 'aria-label': 'ant design'}}  onClick={handleChange}  />
+  
+          <Typography fontSize={10} fontWeight={600} color={'#626262'} sx={{ml: 1}}>  {/* OPEN SANS */}
+              I agree to <span style={{color: COLOR.PRIMARY_COLOR2}}> Terms & Conditions </span> and <span style={{color: COLOR.PRIMARY_COLOR2}}>Privacy Policy.</span>
+          </Typography>
+      </Stack>
+  
+          <Divider color={COLOR.PRIMARY_COLOR1} sx={{mt: 5}} >  <Typography  fontSize={12} fontWeight={600} color={COLOR.PRIMARY_COLOR1} sx={{mx: 3}}> Or login with </Typography> </Divider>
+          
+          <Button
+              variant='contained' 
+              sx={{minWidth: '90vw', alignItems:"center", my: 2, minHeight: "6vh", background: COLOR.BASE_COLOR4, color: COLOR.PRIMARY_COLOR1 , borderRadius: 2,border: `1px solid ${COLOR.BASE_COLOR1}`,  boxShadow: ` 0px 4px 12px rgba(98, 98, 98, 0.06)` }}
+              disableElevation
+              onClick={() => changeLoggin()}
+          >
+              {change === true ? <Mail sx={{mr: 1}} /> : <Call sx={{mr: 1}} /> } {change === true ? 'Mail' : 'Mobile number' }
+          </Button>
+    </Grid>
 
-                        {open && <SwipeOTPBox open={openDrawer} close={closeDrawer} /> }
+    {open && <SwipeOTPBox open={openDrawer} close={closeDrawer} input={value ? value : null} /> }
     </>
   )
 }

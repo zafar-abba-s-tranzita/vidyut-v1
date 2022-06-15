@@ -41,8 +41,8 @@ function Login() {
                     disableUnderline
 
                 >
-                    <option value={'En'}>English</option>
-                    <option value={'Hi'}>Hindi</option>
+                    <option value={'En'}> English </option>
+                    <option value={'Hi'}> हिन्दी </option>
                 </NativeSelect>
                 </Grid>
                
