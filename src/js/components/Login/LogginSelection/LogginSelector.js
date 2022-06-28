@@ -4,6 +4,7 @@ import { Checkbox, Grid, NativeSelect, Typography, OutlinedInput, InputAdornment
 import { COLOR } from '../../../../styles/Color'
 import { Call, CallOutlined, EmailOutlined, KeyboardArrowDown, LanguageRounded, Mail } from '@mui/icons-material'
 import SwipeOTPBox from '../components/SwipeOTPBox';
+import { requestEmailLogin } from '../../../actions/loginActions';
 
 const AntSwitch = styled(Switch)(({ theme }) => ({
     width: 28,
@@ -52,11 +53,13 @@ function LogginSelector() {
     const [activeBtn, setActiveBtn] = React.useState(true);
     const [change, setChange] = React.useState(true); //true for mobile 
     const [open, setOpen] = React.useState(false);
-    const [value, setValue] = React.useState(null)
-
+    const [value, setValue] = React.useState(null);
+    const [valError, setValError] = React.useState(false);
+ 
     function handleMobileNumChange(e) {
       let regx = /((\+*)((0[ -]*)*|((91 )*))((\d{12})+|(\d{10})+))|\d{5}([- ]*)\d{6}/
       if(e.target.value.match(regx)){
+          setValError(false)
           setValue(e.target.value)
       }
       else{
@@ -66,6 +69,7 @@ function LogginSelector() {
 
     function handleEmailChange(e) {
       if(e.target.value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)){
+          setValError(false)
           setValue(e.target.value)
       }
       else{
@@ -74,8 +78,29 @@ function LogginSelector() {
     }
 
 
+    let identifierType = ""
+
+    if(change === true){
+      identifierType = "MOBILE"
+    }else{
+      identifierType = "EMAIL"
+    }
     const openDrawer = (open) => {
-        setOpen(open);
+      if(change === true){
+        identifierType = "MOBILE"
+      }else{
+        identifierType = "EMAIL"
+      }
+      setValError(false)
+      requestEmailLogin(value, identifierType).then((res) => {
+        if(res.status === 200){
+          setOpen(open)
+        }
+        else{
+          setValError(true)
+          // setValue(null)
+        }
+      })
     }
 
     const closeDrawer = () => {
@@ -90,6 +115,11 @@ function LogginSelector() {
         setValue(null);
         setChange(change ? false : true);
     }
+
+    React.useEffect(() => {
+      
+    }, [])
+    
 
   return (  
     <>
@@ -113,13 +143,15 @@ function LogginSelector() {
           type={change === true ? 'number' : 'text'}
           // value={value}
           onChange={change === true ? handleMobileNumChange : handleEmailChange}
+          error={valError}
+          // helperText="Email/Phone No. Doesn't match with our records.."
       />
   
       <Button
           variant='contained' 
           sx={{minWidth: '90vw', alignItems:"center", my: 2, minHeight: "6vh", background: '#036463', color: '#ffffff' , borderRadius: 2 }}
           disableElevation
-          disabled={value ? false : true}
+          disabled={value && activeBtn ? false : true}
           onClick={() => openDrawer(true)}
       >
           Login
@@ -144,7 +176,7 @@ function LogginSelector() {
           </Button>
     </Grid>
 
-    {open && <SwipeOTPBox open={openDrawer} close={closeDrawer} input={value ? value : null} /> }
+    {open && <SwipeOTPBox open={openDrawer} close={closeDrawer} input={value ? value : null} identifier={identifierType} /> }
     </>
   )
 }

@@ -1,13 +1,14 @@
 import React from 'react'
 import { useLocation } from 'react-router-dom'
 import AppBar from "../../../components/AppBar/AppBar"
-import { Container, Grid, Typography, Card, CardContent, Button, Divider } from '@mui/material';
+import { Container, Grid, Typography, Card, CardContent, Button, Divider, Stack } from '@mui/material';
 import { borderRadius, Box } from '@mui/system';
 import SmallAuto from "../../../../images/AutoRckshawSmall.svg"
 import { ArrowBackRounded, ArrowLeftRounded, ArrowRightAltOutlined, ArrowRightAltRounded, ArrowRightRounded, InfoOutlined } from '@mui/icons-material';
 import UserBox from './components/UserBox';
 import PathVector from "../../../../images/path-vector.svg";
 import KMLeft from "../../../../images/KMLeft2.svg";
+import KMError from "../../../../images/KMLeftError.svg";
 import { COLOR } from "../../../../styles/Color";
 import VTLogo from '../../../../images/VTlogo4 3.png'
 
@@ -230,15 +231,18 @@ function Dashboard() {
             style={{ justifyContent: 'center', flexDirection: 'column', alignItems: 'flex-start'}}
           >
           <Grid item>
-          <Typography
-              color="textSecondary"
-              gutterBottom
-              fontSize={12}
-              fontWeight={700}
-              sx={{wordWrap: 'break-word', letterSpacing: 1.22, textAlign: 'left'}}
-            >
-              Remaining Kms
+          <Stack direction="row" spacing={1} alignItems="flex-start">
+            <Typography
+                color="textSecondary"
+                gutterBottom
+                fontSize={12}
+                fontWeight={700}
+                sx={{wordWrap: 'break-word', letterSpacing: 1.22, textAlign: 'left'}}
+              >
+                Remaining Kms 
             </Typography>
+            <InfoOutlined sx={{color: COLOR.TYPO_BASE6, fontSize: 15}} />
+          </Stack>
             
           </Grid>
 
@@ -251,7 +255,8 @@ function Dashboard() {
           </Grid>
 
           <Grid item>
-            <img src={KMLeft} />
+            <img src={KMLeft} alt="" />
+            {/* <img src={KMError} alt="" /> */}
           </Grid>
             </Grid>
           </CardContent>

@@ -17,6 +17,8 @@ import ErrorAlert from '../../Alert/Error';
 import SuccessGIF from '../../../../images/success-otp.gif'
 import Dashboard from '../../../containers/App/Dashboard/Dashboard';
 import { Link } from 'react-router-dom';
+import { verifyOTP } from '../../../actions/loginActions';
+import axios from 'axios';
 
 const drawerBleeding = 56;
 
@@ -46,15 +48,46 @@ function SwipeOTPBox(props) {
     const [success, setSuccess] = React.useState(false);
 
     const handleOTP = ()  => { 
-        if(otp.length === 4) {
-          let val = '0000'
-          if (otp === val) {
-            setError(true);
-          } else {
-            setError(false);
-            setSuccess(true);
-          }
-        } else { setError(false) }
+      if (otp.length === 4){
+        var data = JSON.stringify({
+          "channel": "DCO_APP",
+          "identifierType": props.identifier,
+          "identifierValue": props.input,
+          "otp": otp
+        });
+    
+        var config = {
+          method: 'post',
+          url: 'https://uat-api.vidyuttech.com/lms/api/v1/auth/verify',
+          headers: { 
+            'Content-Type': 'application/json'
+          },
+          data : data
+        };
+    
+        axios(config)
+        .then(function (response) {
+          console.log(JSON.stringify(response.data));
+          setError(false);
+          setSuccess(true);
+        })
+        .catch(function (error) {
+          console.log(error.response.data);
+          setError(true);
+        });
+      } else { setError(false) }
+
+
+
+        // if(otp.length === 4) {
+        //   let val = '0000'
+        //   if (otp === val) {
+            // setError(true);
+        //   } else {
+        //     setError(false);
+        //     setSuccess(true);
+        //   }
+        // } else { setError(false) }
     }
 
     const reset = () => {
