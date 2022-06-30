@@ -4,7 +4,8 @@ import { Checkbox, Grid, NativeSelect, Typography, OutlinedInput, InputAdornment
 import { COLOR } from '../../../../styles/Color'
 import { Call, CallOutlined, EmailOutlined, KeyboardArrowDown, LanguageRounded, Mail } from '@mui/icons-material'
 import SwipeOTPBox from '../components/SwipeOTPBox';
-import { requestEmailLogin } from '../../../actions/loginActions';
+import { requestLogin } from '../../../actions/loginActions';
+import SimpleLoader from '../../Loader/Loader';
 
 const AntSwitch = styled(Switch)(({ theme }) => ({
     width: 28,
@@ -55,6 +56,7 @@ function LogginSelector() {
     const [open, setOpen] = React.useState(false);
     const [value, setValue] = React.useState(null);
     const [valError, setValError] = React.useState(false);
+    const [load, setLoad] = React.useState(false);
  
     function handleMobileNumChange(e) {
       let regx = /((\+*)((0[ -]*)*|((91 )*))((\d{12})+|(\d{10})+))|\d{5}([- ]*)\d{6}/
@@ -86,15 +88,17 @@ function LogginSelector() {
       identifierType = "EMAIL"
     }
     const openDrawer = (open) => {
+      setLoad(true)
       if(change === true){
         identifierType = "MOBILE"
       }else{
         identifierType = "EMAIL"
       }
       setValError(false)
-      requestEmailLogin(value, identifierType).then((res) => {
+      requestLogin(value, identifierType).then((res) => {
         if(res.status === 200){
           setOpen(open)
+          setLoad(false)
         }
         else{
           setValError(true)
@@ -116,6 +120,10 @@ function LogginSelector() {
         setChange(change ? false : true);
     }
 
+    const handleClose = () => {
+      setLoad(false)
+    }
+
     React.useEffect(() => {
       
     }, [])
@@ -123,6 +131,7 @@ function LogginSelector() {
 
   return (  
     <>
+    {load && <SimpleLoader  open={load} handleClose1={handleClose} /> }
     <Grid item>            
       <Typography fontSize={12} fontWeight={600} color={'#626262'} sx={{ml: 1}}>  {/* OPEN SANS */}
           {change === true ? 'Mobile number' : 'Email'}
@@ -149,7 +158,12 @@ function LogginSelector() {
   
       <Button
           variant='contained' 
-          sx={{minWidth: '90vw', alignItems:"center", my: 2, minHeight: "6vh", background: '#036463', color: '#ffffff' , borderRadius: 2 }}
+          sx={{minWidth: '90vw', alignItems:"center", my: 2, minHeight: "6vh", background: '#036463', color: '#ffffff' , borderRadius: 2,
+           ":hover": {
+            bgcolor: "#036463",
+            color: "white"
+            } 
+          }}
           disableElevation
           disabled={value && activeBtn ? false : true}
           onClick={() => openDrawer(true)}
@@ -168,7 +182,12 @@ function LogginSelector() {
           
           <Button
               variant='contained' 
-              sx={{minWidth: '90vw', alignItems:"center", my: 2, minHeight: "6vh", background: COLOR.BASE_COLOR4, color: COLOR.PRIMARY_COLOR1 , borderRadius: 2,border: `1px solid ${COLOR.BASE_COLOR1}`,  boxShadow: ` 0px 4px 12px rgba(98, 98, 98, 0.06)` }}
+              sx={{minWidth: '90vw', alignItems:"center", my: 2, minHeight: "6vh", background: COLOR.BASE_COLOR4, color: COLOR.PRIMARY_COLOR1 , borderRadius: 2,border: `1px solid ${COLOR.BASE_COLOR1}`,  boxShadow: ` 0px 4px 12px rgba(98, 98, 98, 0.06)`,
+              ":hover": {
+                bgcolor: COLOR.BASE_COLOR4,
+                color: COLOR.PRIMARY_COLOR1
+              }
+              }}
               disableElevation
               onClick={() => changeLoggin()}
           >

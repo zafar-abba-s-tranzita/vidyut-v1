@@ -17,8 +17,9 @@ import ErrorAlert from '../../Alert/Error';
 import SuccessGIF from '../../../../images/success-otp.gif'
 import Dashboard from '../../../containers/App/Dashboard/Dashboard';
 import { Link } from 'react-router-dom';
-import { verifyOTP } from '../../../actions/loginActions';
+import { resendOTP, verifyOTP } from '../../../actions/loginActions';
 import axios from 'axios';
+import SimpleLoader from '../../Loader/Loader';
 
 const drawerBleeding = 56;
 
@@ -46,6 +47,7 @@ function SwipeOTPBox(props) {
     const [otp, setOtp] = React.useState([]);
     const [error, setError] = React.useState(false);
     const [success, setSuccess] = React.useState(false);
+    const [load, setLoad] = React.useState(false);
 
     const handleOTP = ()  => { 
       if (otp.length === 4){
@@ -76,18 +78,6 @@ function SwipeOTPBox(props) {
           setError(true);
         });
       } else { setError(false) }
-
-
-
-        // if(otp.length === 4) {
-        //   let val = '0000'
-        //   if (otp === val) {
-            // setError(true);
-        //   } else {
-        //     setError(false);
-        //     setSuccess(true);
-        //   }
-        // } else { setError(false) }
     }
 
     const reset = () => {
@@ -96,8 +86,28 @@ function SwipeOTPBox(props) {
       setOtp([]);
     }
 
+    const newOtp = () => {
+      setLoad(true)
+      resendOTP(props.input, props.identifier).then((res) => {
+        if(res.status === 200){
+          setOtp([])
+          setError(false)
+          setLoad(false)
+        }
+        else{
+         console.log('Failed to get otp')
+         setLoad(false)
+        }
+    })
+  }
+  
+  const handleClose = () => {
+    setLoad(false);
+  }
+
   return (
     <Root>
+      {load && <SimpleLoader open={load} handleClose1={handleClose} />}
       <CssBaseline />
       <Global
         styles={{
@@ -184,9 +194,11 @@ function SwipeOTPBox(props) {
               }}
             value={otp}
             />
-            <Typography fontSize={12} fontWeight={400} letterSpacing={'1.5%'} sx={{mt: 2, ml: 1, color: COLOR.TYPO_BASE3}} onClick={() => window.confirm("RESEND OTP!!!")}>
+            <div style={{width: 100}}>
+            <Typography fontSize={12} fontWeight={400} letterSpacing={'1.5%'} sx={{mt: 2, ml: 1, color: COLOR.TYPO_BASE3}} onClick={newOtp} textTransform={'uppercase'}>
                 Resend otp
             </Typography>
+            </div>
             
             {error &&  <ErrorAlert 
                             errorInfo={'Please enter correct otp'}
@@ -198,7 +210,12 @@ function SwipeOTPBox(props) {
             <Grid item alignItems={'center'} sx={{position: 'absolute', bottom: 1}}>
             <Button
                 variant='contained' 
-                sx={{minWidth: '90vw', alignItems:"center", my: 5, minHeight: "6vh", background: COLOR.PRIMARY_COLOR1, color: COLOR.BASE_COLOR4 , borderRadius: 2,border: `1px solid ${COLOR.BASE_COLOR1}`,  boxShadow: ` 0px 4px 12px rgba(98, 98, 98, 0.06)` }}
+                sx={{minWidth: '90vw', alignItems:"center", my: 5, minHeight: "6vh", background: COLOR.PRIMARY_COLOR1, color: COLOR.BASE_COLOR4 , borderRadius: 2,border: `1px solid ${COLOR.BASE_COLOR1}`,  boxShadow: ` 0px 4px 12px rgba(98, 98, 98, 0.06)`, 
+                ":hover": {
+                  bgcolor:COLOR.PRIMARY_COLOR1,
+                  color:COLOR.BASE_COLOR4
+                }
+                }}
                 disableElevation
                 disabled={otp.length === 4 ? false : true}
                 onClick={() => handleOTP()}
@@ -231,7 +248,12 @@ function SwipeOTPBox(props) {
             <Grid item alignItems={'center'} sx={{position: 'absolute', bottom: 1}}>
             <Button
                 variant='contained' 
-                sx={{minWidth: '90vw', alignItems:"center", my: 5, minHeight: "6vh", background: COLOR.PRIMARY_COLOR1, color: COLOR.BASE_COLOR4 , borderRadius: 2,border: `1px solid ${COLOR.BASE_COLOR1}`,  boxShadow: ` 0px 4px 12px rgba(98, 98, 98, 0.06)` }}
+                sx={{minWidth: '90vw', alignItems:"center", my: 5, minHeight: "6vh", background: COLOR.PRIMARY_COLOR1, color: COLOR.BASE_COLOR4 , borderRadius: 2,border: `1px solid ${COLOR.BASE_COLOR1}`,  boxShadow: ` 0px 4px 12px rgba(98, 98, 98, 0.06)`, 
+                  ":hover": {
+                    bgcolor:COLOR.PRIMARY_COLOR1,
+                    color:COLOR.BASE_COLOR4
+                  }
+                }}
                 disableElevation
                 // disabled={otp.length === 4 ? false : true}
                 // onClick={() => handleOTP()}

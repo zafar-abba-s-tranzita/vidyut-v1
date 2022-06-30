@@ -1,7 +1,7 @@
 import AppConstants from "../constants/app-constant";
 import axios from "axios";
 
-export function requestEmailLogin(value, identifier) {
+export function requestLogin(value, identifier) {
     let raw = JSON.stringify({
         "channel": "DCO_APP",
         "identifierType": identifier,
@@ -42,4 +42,22 @@ export function verifyOTP(otp, value, identifier) {
         axios(config)
     )
     
+}
+
+export function resendOTP(value, identifier){
+    let raw = JSON.stringify({
+      "channel": "DCO_APP",
+      "identifierType": identifier,
+      "identifierValue": value
+    });
+    return (
+      fetch(`${AppConstants.INIT_BY_EMAIL}`, {
+        method: "POST",
+        mode: "cors",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: raw,
+      })
+     )  
 }
