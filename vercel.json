@@ -5,4 +5,4 @@
         "destination": "https://vidyut-tech-v1.vercel.app/:path*"
       }
     ]
-  }
+}
