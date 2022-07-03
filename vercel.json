@@ -2,7 +2,7 @@
     "rewrites": [
       {
         "source": "/lms/:path*",
-        "destination": "https://vidyut-tech-v1.vercel.app/:path*"
+        "destination": "https://uat-api.vidyuttech.com/:path*"
       }
     ]
 }
