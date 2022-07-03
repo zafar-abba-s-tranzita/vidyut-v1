@@ -7,7 +7,7 @@ export function verifyAuthToken (customerId, authToken) {
     })
     let config = {
         method: 'post',
-        url: `lms/api/v1/auth/validate`,
+        url: `https://uat-api.vidyuttech.com/lms/api/v1/auth/validate`,
         headers: { 
           'Cookie': `vt_customer=${customerId}; vt_channel=DCO_APP; vt_auth_token=${authToken}`,
           'Content-Type': 'application/json'
