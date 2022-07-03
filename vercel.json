@@ -1,8 +1,8 @@
 {
     "rewrites": [
       {
-        "source": "/lms/*",
-        "destination": "https://vidyut-tech-v1.vercel.app/"
+        "source": "/lms/:path*",
+        "destination": "https://vidyut-tech-v1.vercel.app/:path*"
       }
     ]
   }
