@@ -1,12 +1,8 @@
 {
     "rewrites": [
         {
-            "source": "lms/:path*",
-            "destination": "https://uat-api.vidyuttech.com/:path*"
-        },
-        {
-            "source": "lms/:path*/",
-            "destination": "https://uat-api.vidyuttech.com/:path*/"
+            "source": "lms/api/v1/auth/validate",
+            "destination": "https://uat-api.vidyuttech.com"
         }
     ]
 }
