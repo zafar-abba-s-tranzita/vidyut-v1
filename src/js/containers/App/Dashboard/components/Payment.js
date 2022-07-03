@@ -39,7 +39,7 @@ function SwipePrev(props) {
 
     const rates = [
         { id: 1, text: 'Usage till date', rate: 10000 },
-        { id: 2, text: 'Monthly usage', rate: 1500 }
+        { id: 2, text: 'Monthly usage', rate: props.kmsThisMonth }
       ];
 
     const histroy = [
@@ -140,7 +140,7 @@ function SwipePrev(props) {
               )
             })}
            
-           {histroy.map((elem, i) => {
+           {props.data.rechargeList.map((elem, i) => {
                return (
                 <Grid container sx={{width: '100%', background: COLOR.BASE_COLOR4, borderRadius: 2, flexDirection: 'row', justifyContent: 'space-around'}} key={i}>
                 <Grid container xs={5} sx={{flexDirection: 'column', p: 1}}>
@@ -150,20 +150,20 @@ function SwipePrev(props) {
                     </Grid>
                     <Grid item sx={{ml: 1}}>
                         <Typography sx={{fontWeight: 700}}>
-                            Credited
+                            {elem.status === 'OK' ? "Credited" : "Failed"}
                         </Typography>
                     </Grid>
                     </Grid>
                     <Grid item sx={{fontWeight: 500, color: COLOR.TYPO_BASE4, fontSize: 12 }}>
-                    Monday, 27/04/2022
+                        {elem.dateTime}
                     </Grid>
                 </Grid>
                 <Grid container xs={6} sx={{flexDirection: 'column', p: 1, alignItems: 'flex-end', justifyContent: 'space-between'}}>
                     <Grid item sx={{fontWeight: 600, color: COLOR.PRIMARY_COLOR1, fontSize: 16 }}>
-                        ₹500
+                        ₹ {elem.amount}
                     </Grid>
                     <Grid item sx={{fontWeight: 500, color: COLOR.TYPO_BASE4, fontSize: 12 }}>
-                        110 Kms
+                        {elem.kmsCredited} Kms
                     </Grid>
                 </Grid>
                 </Grid>

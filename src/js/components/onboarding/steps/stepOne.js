@@ -5,7 +5,7 @@ import { circularProgressClasses } from '@mui/material/CircularProgress';
 import MobileStepper from '@mui/material/MobileStepper';
 import { ChevronRight, KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material';
 import Logo from '../../../assets/images/onboarding-svg/logo.svg'
-import IphoneMockup1 from '../../../assets/images/onboarding-svg/mobile1.svg'
+import IphoneMockup1 from '../../../assets/images/onboarding-svg/figma-export-first.png'
 import IphoneMockup2 from '../../../assets/images/onboarding-svg/figma-export.png'
 import IphoneMockup3 from '../../../assets/images/onboarding-svg/figma-export-2.png'
 import IphoneMockup4 from '../../../assets/images/onboarding-svg/iphone-mockup-4.svg'
@@ -16,8 +16,6 @@ import Div2 from '../../../assets/images/onboarding-svg/Shape 2.svg'
 import Div3 from '../../../assets/images/onboarding-svg/Shape 3.svg'
 import Div4 from '../../../assets/images/onboarding-svg/Shape 4.svg'
 import { COLOR } from '../../../../styles/Color'
-
-
 
 
 

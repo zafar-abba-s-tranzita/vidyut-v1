@@ -1,5 +1,5 @@
 import React from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useHistory } from 'react-router-dom'
 import AppBar from "../../../components/AppBar/AppBar"
 import { Container, Grid, Typography, Card, CardContent, Button, Divider, Stack } from '@mui/material';
 import { borderRadius, Box } from '@mui/system';
@@ -25,6 +25,9 @@ import { Fade } from '@mui/material';
 import AlertDialogSlide from './components/SwipeDialog';
 import useRazorpay from 'react-razorpay';
 import SwipePrev from './components/Payment';
+import { getCustProfile, getPreviousRecharge } from '../../../actions/dashboardAction';
+import { Cookies, useCookies } from 'react-cookie';
+import { verifyAuthToken } from '../../../actions/validate';
 
 const drawerBleeding = 56;
 
@@ -51,20 +54,28 @@ const Puller = styled(Box)(({ theme }) => ({
 }));
 
 function Dashboard() {
-    const Razorpay = useRazorpay();
-    const location = useLocation();
+  const Razorpay = useRazorpay();
+  const location = useLocation();
+  let history = useHistory();
     const [open, setOpen] = React.useState(false);
     const [value, setValue] = React.useState(1);
     const [activeId, setActiveId] = React.useState();
     const [open1, setOpen1] = React.useState(false);
     const handleOpen = () => setOpen1(true);
     const handleClose = () => setOpen1(false);
-
+    const [user, setUser] = React.useState(null);
+    const [previos, setPrevios] = React.useState([])
     const [openPrevious, setOpenPrevious] = React.useState(false);
 
     const togglePrevDrawer = (prev) => () => {
-      setOpenPrevious(prev);
-      // console.log(prev)
+      let id = localStorage.getItem("customerInfo") ? JSON.parse(localStorage.getItem("customerInfo")).customerId : '' 
+      let auth = localStorage.getItem("customerInfo") ? JSON.parse(localStorage.getItem("customerInfo")).authToken : ''
+      getPreviousRecharge(id, auth).then((res) => {
+        if(res.status === 200){
+          setPrevios(res.data);
+          setOpenPrevious(prev);
+        }
+      }).catch((err) => console.log(err))
     };
 
     const closePrevDrawer = () => {
@@ -126,12 +137,35 @@ function Dashboard() {
       //handle's razorpay here..
     }
     
+    React.useEffect(() => {
+      let id = localStorage.getItem("customerInfo") ? JSON.parse(localStorage.getItem("customerInfo")).customerId : ''
+      let auth = localStorage.getItem("customerInfo") ? JSON.parse(localStorage.getItem("customerInfo")).authToken : ''
+
+      verifyAuthToken(id , auth).then((res) => {
+        if (res.status === 200){
+          getCustProfile(id, auth).then((res) => {
+            setUser(res.data);
+          }).catch((err) => console.log(err));
+        } else {
+          history.push('/');
+        }
+      })
+      .catch((err) => {
+        history.push('/');
+        console.log(err)
+      }
+      )
+
+      
+      
+    }, [])
+    
   return (
     <div style={{background: COLOR.BASE_COLOR4 , height: '100vh' }}>
     <Grid container style={{height: '45vh'}}>
     <AppBar />
             <Grid container item xs={12} alignItems="center" justifyContent="center">
-                <UserBox />
+                <UserBox u_info={user} /> 
             </Grid>
     </Grid>
     
@@ -175,7 +209,7 @@ function Dashboard() {
               
               </Grid>
               <Grid item>
-              <Typography color={"#141414"} fontSize={24} fontWeight={700} >900</Typography>
+              <Typography color={"#141414"} fontSize={24} fontWeight={700} >{user ? user.vehicleStatsList[0].kmsThisMonth.toLocaleString('en-IN') : 0}</Typography>
               <Typography color={"#141414"} fontSize={10} fontWeight={600}>Kms</Typography>
               </Grid>
             </Grid>
@@ -241,22 +275,24 @@ function Dashboard() {
               >
                 Remaining Kms 
             </Typography>
-            <InfoOutlined sx={{color: COLOR.TYPO_BASE6, fontSize: 15}} />
+            {user && user.vehicleStatsList[0].kmsRemaining < 30 && <InfoOutlined sx={{color: COLOR.TYPO_BASE6, fontSize: 15}} />}
           </Stack>
             
           </Grid>
 
           <Grid item>
 
-          <Typography color={"#141414"} fontSize={43} fontWeight={600} >1,000</Typography>
+          <Typography color={"#141414"} fontSize={43} fontWeight={600} >
+              {user ? user.vehicleStatsList[0].kmsRemaining.toLocaleString('en-IN') : 0}
+          </Typography>
           <Typography color={"#141414"} fontSize={14} fontWeight={600}>Kms</Typography>
             
           </Grid>
           </Grid>
 
           <Grid item>
-            <img src={KMLeft} alt="" />
-            {/* <img src={KMError} alt="" /> */}
+           { user ? user.vehicleStatsList[0].kmsRemaining > 30 ?  <img src={KMLeft} alt={`you have ${user.vehicleStatsList[0].kmsRemaining}kms left`} /> :
+            <img src={KMError} alt={`Danger!!, you have ${user.vehicleStatsList[0].kmsRemaining}kms only left`} /> : <img src={KMLeft} alt={`you have kms left`} /> }
           </Grid>
             </Grid>
           </CardContent>
@@ -267,8 +303,13 @@ function Dashboard() {
 
           <Grid container sx={{mt: 2}}>
             <Grid item xs={12}>
-              <Button variant="contained" sx={{minWidth: '92vw', minHeight: '48px', color: '#fff', background:'#036463' , borderRadius: 2}}  
-                  onClick={toggleDrawer(true)}
+              <Button variant="contained" sx={{minWidth: '92vw', minHeight: '48px', color: '#fff', background:'#036463' , borderRadius: 2,
+                  ':hover': {
+                    color: '#fff',
+                    background: '#036463'
+                  }
+                }}  
+                onClick={toggleDrawer(true)}
               >
               Recharge now
               </Button>
@@ -355,7 +396,7 @@ function Dashboard() {
 
           <Grid item>
 
-          <Typography color={"#141414"} fontSize={43} fontWeight={600} >1,000</Typography>
+          <Typography color={"#141414"} fontSize={43} fontWeight={600} >{user ? user.vehicleStatsList[0].kmsRemaining.toLocaleString('en-IN') : 0}</Typography>
           <Typography color={"#141414"} fontSize={14} fontWeight={600}>Kms</Typography>
 
           </Grid>
@@ -427,7 +468,7 @@ function Dashboard() {
     
     {openDialog && <AlertDialogSlide  open={openDialog} handleClose1={handleDialogClose}/>}
 
-    {openPrevious && <SwipePrev open={openPrevious} handlePrevClose={closePrevDrawer} />}
+    {openPrevious && <SwipePrev open={openPrevious} handlePrevClose={closePrevDrawer} data={previos} kmsThisMonth={user ? user.vehicleStatsList[0].kmsThisMonth.toLocaleString('en-IN') : 0} />}
       
     </div>
   )
