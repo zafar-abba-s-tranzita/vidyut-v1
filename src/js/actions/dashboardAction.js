@@ -12,6 +12,23 @@ export function getCustProfile (customerId, authToken) {
         }
       };
    return (axios(config))
+
+    // let raw = JSON.stringify({
+    //     "channel": "DCO_APP",
+    //     "identifierType": identifier,
+    //     "identifierValue": value
+    //   });
+//    return (
+//     fetch(`lms/api/v1/customer/1/profile`, {
+//       method: "GET",
+//       mode: "cors",
+//       headers: {
+//         "content-type": "application/json",
+//         'Cookie': `vt_customer=${customerId}; vt_channel=DCO_APP; vt_auth_token=${authToken}`,
+//       },
+//     //   body: raw,
+//     })
+//    )
 }
 
 export function getPreviousRecharge (customerId, authToken) {
@@ -24,4 +41,5 @@ export function getPreviousRecharge (customerId, authToken) {
   };
   return (axios(config))
 }
+
 
